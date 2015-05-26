@@ -1,10 +1,5 @@
 package app.dragndrop
 
-import java.io.ByteArrayOutputStream
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
-
 import com.vaadin.event.dd.DragAndDropEvent
 import com.vaadin.event.dd.DropHandler
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
