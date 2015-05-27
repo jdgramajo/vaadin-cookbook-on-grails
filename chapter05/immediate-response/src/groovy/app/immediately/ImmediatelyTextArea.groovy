@@ -14,7 +14,7 @@ public class ImmediatelyTextArea extends VerticalLayout{
 		TextArea textArea = new TextArea()
 		textArea.with {
 			setImmediate(true)
-			textArea.setTextChangeEventMode(TextChangeEventMode.EAGER)
+			setTextChangeEventMode(TextChangeEventMode.EAGER)
 		}
 		
 		final Button saveButton = new Button("Saved")
