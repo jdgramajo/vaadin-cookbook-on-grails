@@ -11,14 +11,14 @@ import com.vaadin.data.util.converter.Converter.ConversionException
 public class DateTimeConverter implements Converter<Date, DateTime> {
 
 	@Override
-	public DateTime convertToModel(Date value, Locale locale)
-			throws ConversionException {
+	public DateTime convertToModel(Date value, Class<? extends DateTime> target, Locale locale) 
+		throws ConversionException {
 		return new DateTime(value)
 	}
 
 	@Override
-	public Date convertToPresentation(DateTime value, Locale locale)
-			throws ConversionException {
+	public Date convertToPresentation(DateTime value, Class<? extends Date> target, Locale locale) 
+	throws ConversionException {
 		Date date = value.toDate()
 		return date
 	}
