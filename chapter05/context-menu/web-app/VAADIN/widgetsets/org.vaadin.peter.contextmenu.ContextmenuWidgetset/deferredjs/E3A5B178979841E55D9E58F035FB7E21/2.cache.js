@@ -1,0 +1,1 @@
+$wnd.org_vaadin_peter_contextmenu_ContextmenuWidgetset.runAsyncCallback2('Dab(1530,1,JLd);_.tc=function b9b(){fXb((!$Wb&&($Wb=new kXb),$Wb),this.a.d)};oFd(Qh)(2);\n//# sourceURL=org.vaadin.peter.contextmenu.ContextmenuWidgetset-2.js\n')

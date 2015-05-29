@@ -42,7 +42,7 @@ vaadin {
     // - run ``grails vaadin-compile-widgetset`` afterwards 
     //   (and after major Vaadin version changes)
     // Unless set the default from Vaadin is used
-    // widgetset = 'com.mycompany.widgetset'
+    widgetset = 'org.vaadin.peter.contextmenu.ContextmenuWidgetset'
 
     compile {
         //usePathJar = true //if you have problem with long classpath and vaadin-compile-widgetset on windows, uncomment this line
