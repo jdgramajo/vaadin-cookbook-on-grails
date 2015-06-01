@@ -50,12 +50,12 @@
     <servlet>
         <servlet-name>gsp</servlet-name>
         <servlet-class>org.codehaus.groovy.grails.web.pages.GroovyPagesServlet</servlet-class><init-param><description>Allows developers to view the intermediate source code, when they pass a showSource argument in the URL.</description><param-name>showSource</param-name><param-value>1</param-value></init-param>
-    </servlet><servlet><servlet-name>VaadinServlet 0</servlet-name><servlet-class>com.vaadin.grails.server.DefaultServlet</servlet-class><init-param><description>Vaadin UI class</description><param-name>UI</param-name><param-value>app.MyVaadinUI</param-value></init-param><load-on-startup>1</load-on-startup></servlet><servlet><servlet-name>grails-errorhandler</servlet-name><servlet-class>org.codehaus.groovy.grails.web.servlet.ErrorHandlingServlet</servlet-class></servlet>
+    </servlet><servlet><servlet-name>grails-errorhandler</servlet-name><servlet-class>org.codehaus.groovy.grails.web.servlet.ErrorHandlingServlet</servlet-class></servlet><servlet><servlet-name>VaadinServlet 0</servlet-name><servlet-class>com.vaadin.grails.server.DefaultServlet</servlet-class><init-param><description>Vaadin UI class</description><param-name>UI</param-name><param-value>app.MyVaadinUI</param-value></init-param><load-on-startup>1</load-on-startup></servlet>
 
     <servlet-mapping>
         <servlet-name>gsp</servlet-name>
         <url-pattern>*.gsp</url-pattern>
-    </servlet-mapping><servlet-mapping><servlet-name>VaadinServlet 0</servlet-name><url-pattern>/VAADIN/*</url-pattern></servlet-mapping><servlet-mapping><servlet-name>VaadinServlet 0</servlet-name><url-pattern>/*</url-pattern></servlet-mapping><servlet-mapping><servlet-name>grails-errorhandler</servlet-name><url-pattern>/grails-errorhandler</url-pattern></servlet-mapping><servlet-mapping><servlet-name>grails</servlet-name><url-pattern>*.dispatch</url-pattern></servlet-mapping>
+    </servlet-mapping><servlet-mapping><servlet-name>grails-errorhandler</servlet-name><url-pattern>/grails-errorhandler</url-pattern></servlet-mapping><servlet-mapping><servlet-name>VaadinServlet 0</servlet-name><url-pattern>/VAADIN/*</url-pattern></servlet-mapping><servlet-mapping><servlet-name>VaadinServlet 0</servlet-name><url-pattern>/*</url-pattern></servlet-mapping><servlet-mapping><servlet-name>grails</servlet-name><url-pattern>*.dispatch</url-pattern></servlet-mapping>
 
     <session-config>
         <!-- 30 minutes -->
