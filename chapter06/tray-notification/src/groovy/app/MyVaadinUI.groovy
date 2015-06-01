@@ -27,7 +27,7 @@ public class MyVaadinUI extends UI {
             Notification notification = new Notification("Well done!", 
                 "You have clicked on the button.", Notification.Type.TRAY_NOTIFICATION)
 
-//            notification.setDelayMsec(0)
+            notification.setDelayMsec(0)
             notification.setPosition(Position.TOP_RIGHT)
             notification.setStyleName("mynotification")
 
