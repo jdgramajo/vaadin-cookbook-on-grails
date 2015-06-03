@@ -1,0 +1,23 @@
+package app
+
+import app.simple.LoginFormPanel
+import com.vaadin.server.VaadinRequest
+import com.vaadin.ui.Alignment
+import com.vaadin.ui.UI
+import com.vaadin.ui.VerticalLayout
+
+@SuppressWarnings("serial")
+public class Demo extends UI {
+    @Override
+    protected void init(VaadinRequest request) {
+        VerticalLayout layout = new VerticalLayout()
+        setContent(layout)
+        
+        LoginFormPanel loginPanel = new LoginFormPanel()
+        layout.with {
+            addComponent(loginPanel)
+            setSizeFull()
+            setComponentAlignment(loginPanel, Alignment.MIDDLE_CENTER)
+        }
+    }
+}
