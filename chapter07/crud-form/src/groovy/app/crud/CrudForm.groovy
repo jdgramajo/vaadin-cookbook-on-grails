@@ -1,5 +1,6 @@
 package app.crud
 
+import com.vaadin.grails.Grails
 import com.vaadin.data.Item
 import com.vaadin.data.fieldgroup.BeanFieldGroup
 import com.vaadin.data.fieldgroup.FieldGroup
@@ -25,8 +26,10 @@ public class CrudForm extends VerticalLayout {
 	BeanItemContainer<Product> tableContainer
 	FieldGroup fieldGroup
 	Action actionDelete = new Action("Delete")
-	int code = 1
 	static final int MAX_PAGE_LENGTH = 15
+	ProductService productService = Grails.get(ProductService)
+	final visibleProductProperties = ['code', 'name', 'price', 'salable']
+	def propertiesToRemove
 
 	CrudForm() {
 		setSizeUndefined()
@@ -40,7 +43,10 @@ public class CrudForm extends VerticalLayout {
 
 	private void initTable() {
 		tableContainer = new BeanItemContainer<Product>(Product.class)
-		tableContainer.removeContainerProperty('metaClass')
+		propertiesToRemove = tableContainer.containerPropertyIds - visibleProductProperties
+		propertiesToRemove.each { propertyId ->
+			tableContainer.removeContainerProperty(propertyId)
+		}
 		fillTableContainer(tableContainer)
 		table.setContainerDataSource(tableContainer)
 		table.setSelectable(true)
@@ -69,7 +75,8 @@ public class CrudForm extends VerticalLayout {
 	private Button createAddButton() {
 		Button button = new Button("Add product")
 		button.addClickListener({
-			openProductWindow(new BeanItem<Product>(new Product(code: code++)), "Add product")				
+			openProductWindow(new BeanItem<Product>(new Product(code: productService.getMaxCode() + 1,
+				name: "New Product", price: 0.00)), "Add product")				
 		} as ClickListener)
 		return button
 	}
@@ -84,7 +91,7 @@ public class CrudForm extends VerticalLayout {
 		
 		fieldGroup = new BeanFieldGroup<Product>(Product.class)
 		fieldGroup.setItemDataSource(beanItem)
-		fieldGroup.getUnboundPropertyIds().findAll {!it.equals('metaClass')}. each { propertyId ->
+		fieldGroup.getUnboundPropertyIds().findAll { visibleProductProperties.contains(it) }. each { propertyId ->
 			layout.addComponent(fieldGroup.buildAndBind(propertyId))
 		}
 		layout.addComponent(createOkButton(window))
@@ -96,13 +103,19 @@ public class CrudForm extends VerticalLayout {
 		okButton.addClickListener({
 			try {
 				fieldGroup.commit()
-				BeanItem<Product> beanItem = (BeanItem<Product>) fieldGroup.getItemDataSource()
+				BeanItem<Product> beanItem = fieldGroup.getItemDataSource() as BeanItem<Product>
+				println beanItem.getItemPropertyIds()
+				if(!productService.saveProduct(beanItem.getBean())) {
+					throw new Exception("Error persisting product.")
+				}
 				tableContainer.addItem(beanItem.getBean())					
 				updateTable()
 				window.close()
-			} catch (CommitException e) {
-				Notification.show(e.getMessage(), Type.ERROR_MESSAGE)					
-			}				
+			} catch (CommitException ce) {
+				Notification.show(ce.getMessage(), Type.ERROR_MESSAGE)					
+			} catch (Exception e) {
+				Notification.show(e.getMessage(), Type.ERROR_MESSAGE)
+			}
 		} as ClickListener)
 		return okButton
 	}
@@ -113,11 +126,9 @@ public class CrudForm extends VerticalLayout {
 	}
 
 	private void fillTableContainer(BeanItemContainer<Product> tableContainer) {
-		tableContainer.with {
-			addItem(new Product(code: code++, name: "Computer", price: 599.90))
-			addItem(new Product(code: code++, name: "Mobile phone", price: 14.5))
-			addItem(new Product(code: code++, name: "Tablet", price: 99.90))
-			addItem(new Product(code: code++, name: "Mouse", price: 0.99))
+		def products = productService.findAllProducts()
+		products.each { product ->
+			tableContainer.addItem(product)
 		}
 	}
 
