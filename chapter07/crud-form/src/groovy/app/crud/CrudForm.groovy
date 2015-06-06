@@ -104,7 +104,6 @@ public class CrudForm extends VerticalLayout {
 			try {
 				fieldGroup.commit()
 				BeanItem<Product> beanItem = fieldGroup.getItemDataSource() as BeanItem<Product>
-				println beanItem.getItemPropertyIds()
 				if(!productService.saveProduct(beanItem.getBean())) {
 					throw new Exception("Error persisting product.")
 				}
