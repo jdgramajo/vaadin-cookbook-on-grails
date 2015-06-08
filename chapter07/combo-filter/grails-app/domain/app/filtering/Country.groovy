@@ -11,6 +11,7 @@ class Country {
 
     static mapping = {
     	cities lazy: false
+    	cities cascade: "all-delete-orphan"
     }
 
 }
