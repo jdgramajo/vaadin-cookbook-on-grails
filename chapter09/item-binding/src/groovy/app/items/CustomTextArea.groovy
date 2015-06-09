@@ -21,7 +21,7 @@ class CustomTextArea extends TextArea {
 			setWidth(width, Unit.PIXELS)				
 		} as ValueChangeListener)
 
-		ObjectProperty<?> heightProperty = (ObjectProperty<?>) itemDataSource.getItemProperty(HEIGHT)
+		ObjectProperty<?> heightProperty = itemDataSource.getItemProperty(HEIGHT) as ObjectProperty<?>
 		heightProperty.addValueChangeListener({ event ->
 			Integer height = event.property.value as Integer
 			setHeight(height, Unit.PIXELS)				
