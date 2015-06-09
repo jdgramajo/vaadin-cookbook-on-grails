@@ -6,4 +6,6 @@ class Product {
 	String name
 	double price
 
+    static constraints = {
+    }
 }

@@ -1,5 +1,6 @@
 package app.container
 
+import com.vaadin.grails.Grails
 import com.vaadin.data.Container
 import com.vaadin.data.util.BeanItemContainer
 import com.vaadin.ui.Table
@@ -7,20 +8,23 @@ import com.vaadin.ui.Table
 @SuppressWarnings("serial")
 public class ProductTable extends Table {
 
+	private ProductService productService = Grails.get(ProductService)
+
 	private BeanItemContainer<Product> products = new BeanItemContainer<Product>(Product.class)
+	private final propertiesToShow = ['id', 'name', 'price']
 	
 	public ProductTable() {
 		fillContainer(products)		
 		setContainerDataSource(products)
-		removeContainerProperty('metaClass')
+		removeGroovyExtraProperties(containerPropertyIds - propertiesToShow)
 		setPageLength(size())		
 	}
 	
-	private void fillContainer(Container container) {	
-		int id = 0
-		container.addItem(new Product(id: id++, name: "Computer", price: 599.90))
-		container.addItem(new Product(id: id++, name: "Phone", price: 14.5))
-		container.addItem(new Product(id: id++, name: "Tablet", price: 99.90))
-		container.addItem(new Product(id: id++, name: "Mouse", price: 0.99))
+	private void fillContainer(Container container) {
+		productService.findAllProducts().each { container.addItem(it) }
+	}
+
+	private void removeGroovyExtraProperties(propertiesToRemove) {
+		propertiesToRemove.each { removeContainerProperty(it) }
 	}
 }
