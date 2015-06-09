@@ -1,5 +1,6 @@
 package app.complextable
 
+import com.vaadin.grails.Grails
 import com.vaadin.data.Container
 import com.vaadin.data.Item
 import com.vaadin.data.fieldgroup.FieldGroup
@@ -23,9 +24,9 @@ public class CRUD extends HorizontalSplitPanel {
 
 	private final static Action ACTION_ADD = new Action("Add")
 	private final static Action ACTION_DELETE = new Action("Delete")
-	private int currentProductId = 0
 	private BeanItemContainer<Product> products = new BeanItemContainer<>(Product.class)
 	private final orderedPropertiesToShow = ['productId', 'name', 'price']
+	private ProductService productService = Grails.get(ProductService)
 
 	CRUD() {		
 		fillContainer(products)
@@ -48,9 +49,10 @@ public class CRUD extends HorizontalSplitPanel {
 				public void handleAction(Action action, Object sender, Object target) {
 					if (ACTION_DELETE == action) {
 						products.removeItem(target)
+						productService.deleteProduct(target)
 					}
 					if (ACTION_ADD == action) {					
-						products.addBean(new Product(productId: currentProductId++, name: "", price: 0.0))					
+						products.addBean(new Product(productId: productService.maxProductId + 1, name: "", price: 0.0))					
 					}
 				}
 
@@ -75,9 +77,10 @@ public class CRUD extends HorizontalSplitPanel {
 			layout.addComponent(group.buildAndBind(propertyId))
 		}
 		Button button = new Button("Commmit")
-		button.addClickListener({ 
+		button.addClickListener({ event ->
 			try {
 				group.commit()
+				productService.saveProduct(item.bean)
 			} catch (CommitException e) {
 				Notification.show(e.getCause().getMessage(), Type.ERROR_MESSAGE)
 			}
@@ -87,10 +90,7 @@ public class CRUD extends HorizontalSplitPanel {
 	}
 
 	private void fillContainer(Container container) {
-		container.addItem(new Product(productId: currentProductId++, name: "Computer", price: 599.90))
-		container.addItem(new Product(productId: currentProductId++, name: "Phone", price: 14.5))
-		container.addItem(new Product(productId: currentProductId++, name: "Tablet", price: 99.90))
-		container.addItem(new Product(productId: currentProductId++, name: "Mouse", price: 0.99))
+		productService.allProducts.each { container.addItem(it) }
 	}
 
 }
