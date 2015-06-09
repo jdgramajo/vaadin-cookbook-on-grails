@@ -25,7 +25,7 @@ public class CRUD extends HorizontalSplitPanel {
 	private final static Action ACTION_DELETE = new Action("Delete")
 	private int currentProductId = 0
 	private BeanItemContainer<Product> products = new BeanItemContainer<>(Product.class)
-	private final propertiesToShow = ['productId', 'name', 'price']
+	private final orderedPropertiesToShow = ['productId', 'name', 'price']
 
 	CRUD() {		
 		fillContainer(products)
@@ -38,8 +38,8 @@ public class CRUD extends HorizontalSplitPanel {
 			setSelectable(true)
 			setSizeFull()
 			addItemClickListener({ event ->
-				if (MouseButton.LEFT.getName().equals(event.getButtonName())) {
-					setSecondComponent(createForm(event.getItem()))
+				if (MouseButton.LEFT.name.equals(event.buttonName)) {
+					setSecondComponent(createForm(event.item))
 				}
 			} as ItemClickListener)
 
@@ -59,7 +59,7 @@ public class CRUD extends HorizontalSplitPanel {
 					[ ACTION_ADD, ACTION_DELETE ] as Action[]
 				}
 			})
-			setVisibleColumns(propertiesToShow.toArray())
+			setVisibleColumns(orderedPropertiesToShow.toArray())
 		}
 		return table
 	}
@@ -71,10 +71,8 @@ public class CRUD extends HorizontalSplitPanel {
 			setMargin(true)
 		}
 		final FieldGroup group = new FieldGroup(item)
-		group.unboundPropertyIds.each { propertyId ->
-			if (propertiesToShow.contains(propertyId)) {
-				layout.addComponent(group.buildAndBind(propertyId))
-			}
+		orderedPropertiesToShow.each { propertyId ->
+			layout.addComponent(group.buildAndBind(propertyId))
 		}
 		Button button = new Button("Commmit")
 		button.addClickListener({ 
