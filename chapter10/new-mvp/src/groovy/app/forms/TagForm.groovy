@@ -2,12 +2,12 @@ package app.forms
 
 import com.vaadin.data.fieldgroup.BeanFieldGroup
 import com.vaadin.data.fieldgroup.FieldGroup
-import com.vaadin.data.fieldgroup.PropertyId
 import com.vaadin.data.util.BeanItem
+import com.vaadin.data.util.BeanItemContainer
 import com.vaadin.ui.FormLayout
 import com.vaadin.ui.TextField
 import com.vaadin.ui.Button
-import com.vaadin.ui.Label
+import com.vaadin.ui.ListSelect
 import com.vaadin.grails.Grails
 
 import app.Tag
@@ -20,7 +20,7 @@ class TagForm extends FormLayout {
 	Button saveButton = new Button("Save")
 
 	TagService tagService = Grails.get(TagService)
-	Label tagsLabel
+	ListSelect tagsList
 
 	TagForm() {
 		setSizeUndefined()
@@ -34,8 +34,8 @@ class TagForm extends FormLayout {
 		saveButton.addClickListener({ event ->
 			fieldGroup.commit()
 			BeanItem<Tag> tagBean = fieldGroup.getItemDataSource() as BeanItem<Tag>
-			if(tagService.saveTag(tagBean.bean) && tagsLabel) {
-				tagsLabel.value += "${tagBean.bean.name} | "
+			if(tagService.saveTag(tagBean.bean) && tagsList) {
+				tagsList.setContainerDataSource(new BeanItemContainer<Tag>(Tag.class, tagService.getAllTags()))
 				fieldGroup.setItemDataSource(new Tag(name: ""))
 			} else {
 				println "Error saving ${tagBean.bean.name}"
