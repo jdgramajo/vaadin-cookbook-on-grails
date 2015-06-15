@@ -18,6 +18,9 @@ class LoginView extends VerticalLayout implements View {
 
 	@Override
 	void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
+
+		margin = true
+
 		TextField userName = new TextField("User:")
 		TextField password = new TextField("Password:")
 		Button loginButton = new Button("Login")
@@ -28,7 +31,7 @@ class LoginView extends VerticalLayout implements View {
 
 		loginButton.addClickListener({ event ->
 			if(userService.doLogin(userName.value, password.value)) {
-				current.navigator.navigateTo(TagsView.VIEW_NAME)
+				UI.current.navigator.navigateTo(TagsView.VIEW_NAME)
 			} else {
 				Notification.show("Incorrect user/password.", Notification.Type.ERROR_MESSAGE)
 			}

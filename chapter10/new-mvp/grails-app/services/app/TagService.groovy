@@ -6,6 +6,10 @@ import grails.transaction.Transactional
 class TagService {
 
     Collection getAllTags() {
-    	Tags.findAll()
+    	Tag.findAll()
+    }
+
+    boolean saveTag(Tag tag) {
+    	tag.save()
     }
 }
