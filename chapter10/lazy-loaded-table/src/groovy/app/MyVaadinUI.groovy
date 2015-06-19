@@ -6,13 +6,9 @@ import com.vaadin.data.Property
 import com.vaadin.data.util.*
 import com.vaadin.server.VaadinRequest
 import com.vaadin.ui.*
-import com.vaadin.ui.Button.ClickListener
+import com.vaadin.grails.Grails
 
-import java.lang.ref.SoftReference
-import java.util.ArrayList
-import java.util.Collection
-import java.util.Collections
-import java.util.List
+//import java.lang.ref.SoftReference
 
 @SuppressWarnings("serial")
 class MyVaadinUI extends UI {
@@ -40,7 +36,7 @@ class MyVaadinUI extends UI {
 
 class LazyLoadedContainer extends BeanContainer {
 
-    private UserService userService = new UserService()
+    private UserService userService = Grails.get(UserService)
 
     public LazyLoadedContainer(Class type) {
         super(type)
@@ -58,7 +54,7 @@ class LazyLoadedContainer extends BeanContainer {
 
     @Override
     public List getItemIds(int startIndex, int numberOfIds) {
-        int endIndex = startIndex + numberOfIds
+        def endIndex = startIndex + numberOfIds < 7000 ? startIndex + numberOfIds : 7000
         println "startIndex: ${startIndex}, endIndex: ${endIndex}"
         def list = userService.list(startIndex, endIndex)
         return list
