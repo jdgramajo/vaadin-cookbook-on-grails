@@ -7,7 +7,7 @@ import spock.lang.Specification
  */
 class MyVaadinUISpec extends Specification {
 
-    void "test UI initialization"() {
+    void "UI initialization"() {
         when: "UI instance is initialized"
             def ui = new MyVaadinUI()
             ui.init(null)
