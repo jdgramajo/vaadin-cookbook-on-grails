@@ -1,21 +1,19 @@
 package app
 
-import grails.test.mixin.TestFor
 import spock.lang.Specification
 
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
-@TestFor(MyVaadinUI)
 class MyVaadinUISpec extends Specification {
 
-    def setup() {
-    }
+    void "test UI initialization"() {
+        when: "UI instance is initialized"
+            def ui = new MyVaadinUI()
+            ui.init(null)
 
-    def cleanup() {
-    }
-
-    void "test something"() {    	
+        then: "UI has content of type LoginLayout"
+            ui.content instanceof LoginLayout
     }
 
 }
