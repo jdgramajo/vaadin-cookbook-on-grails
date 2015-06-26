@@ -2,7 +2,7 @@ package app
 
 import spock.lang.Specification
 import spock.lang.Shared
-import spock.lang.IgnoreRest
+//import spock.lang.IgnoreRest
 
 import com.vaadin.ui.Button
 import com.vaadin.ui.Component
@@ -41,12 +41,12 @@ class LoginLayoutSpec extends Specification {
 	}
 
 	void "login button with proper caption, visible and enabled"() {
-		when:"get the button in layout"
-			Button btn = loginLayout.btnLogin
-		then:
-			btn.caption.equals("Login")
-			btn.visible
-			btn.enabled
+		expect:
+			loginLayout.btnLogin.with {
+				caption.equals("Login")
+				visible
+				enabled
+			}
 	}
 
 }
