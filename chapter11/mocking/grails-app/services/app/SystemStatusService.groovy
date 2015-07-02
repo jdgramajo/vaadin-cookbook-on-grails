@@ -5,7 +5,7 @@ import grails.transaction.Transactional
 @Transactional
 class SystemStatusService {
 
-    static String getValue() {
+    String getValue() {
     	"Offline"
     }
 }
