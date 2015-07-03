@@ -6,10 +6,10 @@ import com.vaadin.ui.Label
 class SystemStatusLayout extends HorizontalLayout {
 
     Label lblSystemStatus
-    SystemStatusService statusService = new SystemStatusService()
+    SystemStatusService systemStatusService = new SystemStatusService()
 
-    public SystemStatusLayout() {
-        String value = statusService.getValue()
+    void init() {
+        String value = systemStatusService.getValue()
         lblSystemStatus = new Label(value)
         addComponent(lblSystemStatus)
     }

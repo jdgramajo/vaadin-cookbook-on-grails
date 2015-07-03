@@ -4,15 +4,16 @@ import spock.lang.Specification
 
 class SystemStatusLayoutSpec extends Specification {
 
-	def service
-	SystemStatusLayout layout
-
 	void "mock returns Online status"() {
 		given:
-			service = GroovySpy(SystemStatusService)
+			def service = Mock(SystemStatusService)
+			def layout = new SystemStatusLayout()
+
+		and:
+			layout.systemStatusService = service
 			
 		when:
-			layout = new SystemStatusLayout()
+			layout.init()
 
 		then:
 			service.value >> "Online"
