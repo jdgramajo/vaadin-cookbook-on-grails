@@ -22,7 +22,27 @@ class TableLayoutSpec extends Specification {
 			tableLayout.init()
 
 		then:"only name column is visible"
-			table.visibleColumns[0] == "name"
+			tableLayout.table.visibleColumns[0].equals("name")
+	}
+
+	void "able to set table contents"() {
+		given:
+			UserService userService = Mock()
+			List<User> fakeUsers = []
+			fakeUsers << new User(name: "Wayne Gretzky")
+			fakeUsers << new User(name: "Jaromir Jagr")
+			fakeUsers << new User(name: "Sidney Crosby")
+
+		when:"userService mocked is set and init is called"
+			tableLayout.userService = userService
+			tableLayout.init()
+
+		then:"I can set the table contents"
+			userService.findAll() >> fakeUsers
+			tableLayout.table.itemIds.size() == 3
+
+		and:"all contents are Users"
+			tableLayout.table.itemIds.each { it instanceof User }			
 	}
 
 }
