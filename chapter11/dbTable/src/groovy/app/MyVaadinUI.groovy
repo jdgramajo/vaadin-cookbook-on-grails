@@ -9,7 +9,7 @@ public class MyVaadinUI extends UI {
     @Override
     protected void init(VaadinRequest request) {
         TableLayout tableLayout = new TableLayout() 
-        tableLayout.init() 
+        tableLayout.init()
         setContent(tableLayout) 
     }
 }

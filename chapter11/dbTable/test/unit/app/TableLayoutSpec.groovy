@@ -7,7 +7,9 @@ import com.vaadin.ui.Table
 
 class TableLayoutSpec extends Specification {
 
-	@Shared tableLayout = new TableLayout()
+	UserService userService = Mock()
+	User user = Mock()
+	TableLayout tableLayout = new TableLayout()
 
 	void "layout has a table"() {
 		when:"TableLayout init"
@@ -27,7 +29,6 @@ class TableLayoutSpec extends Specification {
 
 	void "able to set table contents"() {
 		given:
-			UserService userService = Mock()
 			List<User> fakeUsers = []
 			fakeUsers << new User(name: "Wayne Gretzky")
 			fakeUsers << new User(name: "Jaromir Jagr")

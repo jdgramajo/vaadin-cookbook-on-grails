@@ -2,11 +2,12 @@ package app
 
 import com.vaadin.data.util.BeanItemContainer 
 import com.vaadin.ui.*
+import com.vaadin.grails.Grails
 
 public class TableLayout extends VerticalLayout {
 
     Table table = new Table() 
-    UserService userService = new UserService() 
+    UserService userService = Grails.get(UserService)
 
     void init() {
         setMargin(true) 
@@ -22,7 +23,7 @@ public class TableLayout extends VerticalLayout {
     BeanItemContainer<User> getContainer() {
         BeanItemContainer<User> container = new BeanItemContainer<User>(User.class) 
 
-        userService.findAll().each { user ->
+        userService.getAll().each { user ->
             container.addBean(user) 
         }
 
