@@ -7,10 +7,14 @@ import com.vaadin.grails.Grails
 public class TableLayout extends VerticalLayout {
 
     Table table = new Table() 
-    UserService userService = Grails.get(UserService)
+    UserService userService = null
 
     void init() {
-        setMargin(true) 
+        setMargin(true)
+
+        if(!userService) {
+            userService = Grails.get(UserService)
+        }
 
         BeanItemContainer<User> container = getContainer() 
         table.setContainerDataSource(container)
